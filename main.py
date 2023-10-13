@@ -1,51 +1,31 @@
 from fastapi import FastAPI
 
-api = FastAPI()
-
+api = FastAPI(title='My API')
 
 @api.get('/')
 def get_index():
-    return {
-        'method': 'get',
-        'endpoint': '/'
-        }
+    return {'data': 'hello world'}
 
 
-@api.get('/other')
-def get_other():
+@api.get('/item/{itemid:int}')
+def get_item(itemid):
     return {
-        'method': 'get',
-        'endpoint': '/other'
+        'route': 'dynamic',
+        'itemid': itemid
     }
 
 
-@api.post('/')
-def post_index():
-    return {
-        'method': 'post',
-        'endpoint': '/'
+@api.get('/item/{itemid}/description/{language}')
+def get_item_language(itemid, language):
+    if language == 'fr':
+        return {
+            'itemid': itemid,
+            'description': 'un objet',
+            'language': 'fr'
         }
-
-
-@api.delete('/')
-def delete_index():
-    return {
-        'method': 'delete',
-        'endpoint': '/'
-        }
-
-
-@api.put('/')
-def put_index():
-    return {
-        'method': 'put',
-        'endpoint': '/'
-        }
-
-
-@api.patch('/')
-def patch_index():
-    return {
-        'method': 'patch',
-        'endpoint': '/'
+    else:
+        return {
+            'itemid': itemid,
+            'description': 'an object',
+            'language': 'en'
         }
