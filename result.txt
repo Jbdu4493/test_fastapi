@@ -1,0 +1,79 @@
+-n 
+ --------------All user------------- 
+
+HTTP/1.1 200 OK
+date: Sat, 14 Oct 2023 12:13:06 GMT
+server: uvicorn
+content-length: 39
+content-type: application/json
+
+[{"id":2,"name":"Dorothee","age":"42"}]-n 
+ --------------Add user 1------------- 
+
+HTTP/1.1 200 OK
+date: Sat, 14 Oct 2023 12:13:06 GMT
+server: uvicorn
+content-length: 15
+content-type: application/json
+
+{"result":"ok"}-n 
+ --------------Add user 2------------- 
+
+HTTP/1.1 409 Conflict
+date: Sat, 14 Oct 2023 12:13:06 GMT
+server: uvicorn
+content-length: 35
+content-type: application/json
+
+{"detail":"The id 2 already exist"}-n 
+ -----------------All user------------ 
+
+HTTP/1.1 200 OK
+date: Sat, 14 Oct 2023 12:13:06 GMT
+server: uvicorn
+content-length: 77
+content-type: application/json
+
+[{"id":2,"name":"Dorothee","age":"42"},{"id":1,"name":"Jonathan","age":"34"}]-n 
+ -----------------delete user 1------------ 
+
+HTTP/1.1 200 OK
+date: Sat, 14 Oct 2023 12:13:06 GMT
+server: uvicorn
+content-length: 15
+content-type: application/json
+
+{"result":"ok"}-n 
+ -----------------All user------------ 
+
+HTTP/1.1 200 OK
+date: Sat, 14 Oct 2023 12:13:06 GMT
+server: uvicorn
+content-length: 39
+content-type: application/json
+
+[{"id":2,"name":"Dorothee","age":"42"}]-n 
+ -----------------Update user------------ 
+
+HTTP/1.1 200 OK
+date: Sat, 14 Oct 2023 12:13:06 GMT
+server: uvicorn
+content-length: 37
+content-type: application/json
+
+{"id":2,"name":"Dorothee","age":"42"}HTTP/1.1 200 OK
+date: Sat, 14 Oct 2023 12:13:06 GMT
+server: uvicorn
+content-length: 39
+content-type: application/json
+
+[{"id":2,"name":"Dorothee","age":"42"}]-n 
+ -----------------Header ------------ 
+
+HTTP/1.1 200 OK
+date: Sat, 14 Oct 2023 12:13:06 GMT
+server: uvicorn
+content-length: 22
+content-type: application/json
+
+{"joe anne":"biz efe"}

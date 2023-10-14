@@ -1,31 +1,33 @@
 from fastapi import FastAPI
 
-api = FastAPI(title='My API')
+users=[]
+
+
 
 @api.get('/')
-def get_index():
-    return {'data': 'hello world'}
-
-
-@api.get('/item/{itemid:int}')
-def get_item(itemid):
+def get_index(argument1):
     return {
-        'route': 'dynamic',
-        'itemid': itemid
+        'data': argument1
     }
 
 
-@api.get('/item/{itemid}/description/{language}')
-def get_item_language(itemid, language):
-    if language == 'fr':
-        return {
-            'itemid': itemid,
-            'description': 'un objet',
-            'language': 'fr'
-        }
+@api.get('/typed')
+def get_typed(argument1: int):
+    return {
+        'data': argument1 + 1
+    }
+    
+
+from typing import Optional
+
+@api.get('/addition')
+def get_addition(a: int, b: Optional[int]=None):
+    if b:
+        result = a + b
     else:
-        return {
-            'itemid': itemid,
-            'description': 'an object',
-            'language': 'en'
-        }
+        result = a + 1
+    return {
+        'addition_result': result
+    }
+
+
