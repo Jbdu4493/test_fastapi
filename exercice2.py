@@ -4,10 +4,14 @@ from fastapi import FastAPI, HTTPException,Header
 
 
 class User(BaseModel):
-    id: int
+    id: Optional[int]
     name: str
     age: Optional[str] = None
-        
+    def get_id():
+        User.id += 1
+        return User.id-1
+    
+User.id = 0        
         
 api = FastAPI()
 
@@ -23,8 +27,10 @@ def post_user(user: User):
     userid_list = list(filter(lambda x: x.id==user.id,users))
     if len (userid_list) >= 1 :
          raise HTTPException(status_code=409, detail=f"The id {user.id} already exist")
+    if user.id is None:
+       user.id = User.get_id()
     users.append(user)
-    return {"result":"ok"}
+    return {"result":"ok","id":user.id}
 
 
 @api.post("/users/{userid:int}")
