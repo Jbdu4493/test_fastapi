@@ -33,5 +33,5 @@ jobs:
         run: sleep 10 # Adjust as needed to allow time for the FastAPI app to start
 
       - name: Run Postman Tests
-        run: newman run postman_tests/test_api_user.json
+        run: newman run postman_tests/test_api_user.json -e postman_tests/postman_environment.json
 
