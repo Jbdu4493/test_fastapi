@@ -4,6 +4,8 @@ from fastapi import FastAPI, HTTPException,Header
 
 
 class User(BaseModel):
+    """A user avaible un the application
+    """
     id: Optional[int]
     name: str
     age: Optional[str] = None
@@ -17,13 +19,15 @@ api = FastAPI()
 
 users = []
 
-@api.get('/users')
+@api.get('/users',name='All existing users')
 def get_users():
+    "return all user existing in the application"
     return users if users else {}
 
 
-@api.post("/users")
-def post_user(user: User):
+@api.post("/users",name="Create a new user",responses={200: {"description": "OK"},409: {"description": "User id already exist"}})
+async def post_user(user: User):
+    """Create a new user in the application"""
     userid_list = list(filter(lambda x: x.id==user.id,users))
     if len (userid_list) >= 1 :
          raise HTTPException(status_code=409, detail=f"The id {user.id} already exist")
@@ -33,8 +37,9 @@ def post_user(user: User):
     return {"result":"ok","id":user.id}
 
 
-@api.post("/users/{userid:int}")
-def update_user(user: User,userid):
+@api.post("/users/{userid:int}",name="Update a user",responses={200: {"description": "OK"},404: {"description": "User id not found"}})
+async def update_user(user: User,userid):
+    """Update a existing user with it existing id"""
     userid_list = []
     for i,u in enumerate(users):
         if u.id == userid:
@@ -46,8 +51,9 @@ def update_user(user: User,userid):
     return users[i]
 
 
-@api.delete("/users/{userid:int}")
-def delete_user(userid):
+@api.delete("/users/{userid:int}",name="Delete user",responses={200: {"description": "OK"},404: {"description": "User id not found"}})
+async def delete_user(userid):
+    """Delete a existing user with it existing id"""
     userid_list = []
     for i,u in enumerate(users):
         if u.id == userid:
@@ -60,5 +66,5 @@ def delete_user(userid):
 
 
 @api.get("/header")
-def get_header(usr=Header(),pwd=Header()):
+async def get_header(usr=Header(),pwd=Header()):
     return {usr:pwd }
