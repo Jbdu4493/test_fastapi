@@ -27,8 +27,7 @@ jobs:
           pip install -r requirements.txt
 
           # Start your FastAPI application (assuming your main FastAPI file is app.py)
-          uvicorn exercice2:api --reload
-        background: true
+          uvicorn exercice2:api --reload &
 
       - name: Wait for FastAPI to Start
         run: sleep 10 # Adjust as needed to allow time for the FastAPI app to start
